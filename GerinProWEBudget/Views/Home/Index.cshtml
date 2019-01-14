@@ -1,0 +1,218 @@
+﻿@{
+    ViewBag.Title = "Gerinpro - Cotizador";
+}
+<style>
+    .blueCell {
+        background-color: #0094ff;
+        color: #fff;
+    }
+
+    .with-margin {
+        margin-bottom: 8px;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var stages = 0;
+        $("#btnNew").click(function (e) {
+            if ($("#proManH").val() == null || $("#proManH").val() == "") {
+                $("[data-valmsg-for='proManH']").text("Required");
+                e.preventDefault();
+            } else {
+                $("[data-valmsg-for='proManH']").text("");
+                e.preventDefault.remove();
+            }
+        });
+        $("#proManH").prop("required", true);
+        $("#proStages").change(function () {
+            $("#rowStages").empty();
+            $("#rowStages").append('<div class="col-md-6 text-center with-margin"><h4>Etapa / Entregable</h4></div><div class="col-md-6 text-center with-margin" > <h4>Duracion</h4></div >')
+            stages = $("#proStages").val();
+            alert(stages);
+            for (i = 0; i < stages; i++) {
+                $("#rowStages").append('<div class="row"><div class="col-md-6 with-margin text-center"><input class="form-control" type="text" id="namestage' + (i+1) + '" /></div> <div class="col-md-6 with-margin text-center"><input class="form-control" type="number" id="durationstage' + i+i + '" /></div ></div>')
+                $("#mainCont").append('<div class="container" id="stagesCont'+((i+1))+'"><div class="row"><div class="col-md-2 text-center with-margin"><h4>Etapa / Entregable:</h4></div><div class="col-md-2 text-center with-margin"><input class="form-control" type="number" id="numStage'+i+i+'" disabled value="'+(i+1)+'"/></div><div class="col-md-2 text-center with-margin"><h4>Nombre:</h4></div><div class="col-md-2 text-center with-margin"><input class="form-control" type="number" id="nameStage'+(i+1)+'" disabled /></div></div><div class="row" id="headers"><div class="col-md-2 text-center with-margin"><b>Tipo de Participante</b></div><div class="col-md-1 text-center with-margin"><b>Participante</b></div><div class="col-md-2 text-center with-margin"><b>Salario Base Mensual (Sin IVA)</b></div><div class="col-md-1 text-center with-margin"><b>Incidencia</b></div><div class="col-md-1 text-center with-margin"><b>Etapa</b></div><div class="col-md-2 text-center with-margin"><b>Total Sin IVA</b></div><div class="col-md-2 text-center with-margin"><b>Total con IVA</b></div><div class="col-md-1 text-center with-margin"> <b>Total de días</b></div></div></div>')
+            }
+        });
+
+    });
+</script>
+<div class="jumbotron">
+    <h1>Gerinpro - Cotizador</h1>
+    <p class="lead">Cotizador en línea para proyectos de consultoría</p>
+</div>
+
+@*<div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+    </div>*@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4 col-md-offset-4 text-center with-margin "><h3>Presupuesto Base del Proyecto</h3></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 with-margin text-center">Nombre Del Proyecto</div>
+        <div class="col-md-2 with-margin text-center"><input class="form-control" type="text" id="proName" /></div>
+        <div class="col-md-2 with-margin text-center">Código del Proyecto</div>
+        <div class="col-md-2 with-margin text-center"><input class="form-control" type="text" id="proCode" /></div>
+        <div class="col-md-2 with-margin text-center">Fecha de elaboración</div>
+        <div class="col-md-2 with-margin text-center"><input class="form-control" type="text" id="proDate" disabled value="@DateTime.Now.Date" /></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 with-margin text-center">Número de Etapas o Entregables</div>
+        <div class="col-md-2 with-margin text-center"><input class="form-control" type="number" id="proStages" /></div>
+        <div class="col-md-2 with-margin text-center">Tiempo estimado del proyecto (en meses)</div>
+        <div class="col-md-2 with-margin text-center"><input class="form-control" type="number" id="proMonths" /></div>
+        <div class="col-md-2 with-margin text-center">Gerente del Proyecto</div>
+        <div class="col-md-2 with-margin text-center">
+            @Html.DropDownList("proManH", new SelectList(ViewBag.ManagerHlist, "UserName", "UserName"), "Gerentes", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 text-center with-margin">Factor de Indirectos</div>
+        <div class="col-md-2 with-margin text-center"><input class="form-control" type="number" id="proFactor" /></div>
+        <div class="col-md-2 text-center with-margin">Tasa IVA</div>
+        <div class="col-md-2 with-margin text-center"><input class="form-control" type="number" id="taxRate" value="16" disabled /></div>
+    </div>
+    <div class="container" id="mainCont">
+        <div class="row">
+            <div class="col-md-4 text-center with-margin">
+                <div class="row" id="rowStages">
+
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3 text-center with-margin">
+                        <h4>Participantes</h4>
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <h4>Número de Participantes</h4>
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <h4>Sueldo Base S/IVA</h4>
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <h4>Sueldo Base C/IVA</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-center with-margin">
+                        <b>
+                            Socio
+                        </b>
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="numAssoc" />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="assocRemWOtax" value="@ViewBag.AssociateS" disabled />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="assocRemWTax" value="@(ViewBag.AssociateS*(decimal)1.16)" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-center with-margin">
+                        <b>
+                            Gerente
+                        </b>
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="numMan" />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="manRemWOtax" value="@ViewBag.ManagerS" disabled />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="manRemWTax" value="@(ViewBag.ManagerS*(decimal)1.16)" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-center with-margin">
+                        <b>
+                            Auxiliar Profesional A
+                        </b>
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="numAuxA" />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="auxaRemWOtax" value="@ViewBag.AuxAS" disabled />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="auxaRemWTax" value="@(ViewBag.AuxAS*(decimal)1.16)" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-center with-margin">
+                        <b>
+                            Auxiliar Profesional B
+                        </b>
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="numAuxB" />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="auxbRemWOtax" value="@ViewBag.AuxBS" disabled />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="auxbRemWTax" value="@(ViewBag.AuxBS*(decimal)1.16)" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-center with-margin">
+                        <b>
+                            Auxiliar Profesional C
+                        </b>
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="numAuxC" />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="auxcRemWOtax" value="@ViewBag.AuxCS" disabled />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="auxcRemWTax" value="@(ViewBag.AuxCS*(decimal)1.16)" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-center with-margin">
+                        <b>
+                            Becario
+                        </b>
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="numTrainee" />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="trainRemWOtax" value="@ViewBag.TraineeS" disabled />
+                    </div>
+                    <div class="col-md-3 text-center with-margin">
+                        <input class="form-control" type="number" id="trainRemWTax" value="@(ViewBag.TraineeS*(decimal)1.16)" disabled />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
