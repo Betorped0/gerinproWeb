@@ -39,6 +39,8 @@ namespace GerinProWEBudget.Controllers
             {
                 var user = User.Identity;
                 ViewBag.Name = user.Name;
+                ViewBag.CannotSee = false;
+
                 //    ApplicationDbContext context = new ApplicationDbContext(); 
                 //    var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)); 
 
@@ -53,6 +55,7 @@ namespace GerinProWEBudget.Controllers
             }
             else
             {
+                ViewBag.CannotSee = true;
                 ViewBag.Name = "Not Logged IN";
             }
 

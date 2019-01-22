@@ -9,6 +9,7 @@ namespace GerinProWEBudget.Models
         [Required]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
+        public string UserName { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -73,7 +74,7 @@ namespace GerinProWEBudget.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Nombre")]
-        public string Name { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
